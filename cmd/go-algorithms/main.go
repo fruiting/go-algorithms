@@ -39,18 +39,13 @@ func main() {
 	}
 
 	for _, algorithm := range algorithms {
-		execute(algorithm)
+		fmt.Println("==============")
+		start := time.Now()
+		sortedArr := algorithm.Sort(numArr)
+		fmt.Printf("name: %s\n", algorithm.Name())
+		fmt.Printf("complexity: %s\n", algorithm.Complexity())
+		fmt.Printf("result: %v\n", sortedArr)
+		fmt.Printf("time: %f\n", time.Since(start).Seconds())
+		fmt.Println("==============")
 	}
-}
-
-// execute runs algorithm sort
-func execute(algorithm internal.AlgorithmProcessor) {
-	fmt.Println("==============")
-	start := time.Now()
-	sortedArr := algorithm.Sort(numArr)
-	fmt.Printf("name: %s\n", algorithm.Name())
-	fmt.Printf("complexity: %s\n", algorithm.Complexity())
-	fmt.Printf("result: %v\n", sortedArr)
-	fmt.Printf("time: %f\n", time.Since(start).Seconds())
-	fmt.Println("==============")
 }
