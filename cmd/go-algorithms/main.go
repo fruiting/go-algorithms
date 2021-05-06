@@ -1,14 +1,18 @@
 package main
 
 import (
-	"algorythms/mergesort"
 	"bufio"
 	"fmt"
+	"github.com/fruiting/go-algorithms/internal"
+	"github.com/fruiting/go-algorithms/internal/mergesort"
 	"os"
 	"strconv"
 	"strings"
 	"time"
 )
+
+// numArr array of unsorted ints
+var numArr []int
 
 func main() {
 	reader := bufio.NewReader(os.Stdin)
@@ -21,7 +25,6 @@ func main() {
 	numbers = strings.TrimSuffix(numbers, "\n")
 	numbers = strings.TrimSpace(numbers)
 	stringArr := strings.Split(numbers, " ")
-	var numArr []int
 	for _, value := range stringArr {
 		number, err := strconv.Atoi(value)
 		if err != nil {
@@ -31,11 +34,23 @@ func main() {
 		numArr = append(numArr, number)
 	}
 
+	algorithms := []internal.AlgorithmProcessor{
+		mergesort.NewMergeSort(),
+	}
+
+	for _, algorithm := range algorithms {
+		execute(algorithm)
+	}
+}
+
+// execute runs algorithm sort
+func execute(algorithm internal.AlgorithmProcessor) {
 	fmt.Println("==============")
 	start := time.Now()
-	mergeSortArr := mergesort.Mergesort(numArr)
-	fmt.Println("merge sort")
-	fmt.Printf("result: %v\n", mergeSortArr)
-	fmt.Println("time: %f", time.Since(start).Seconds())
+	sortedArr := algorithm.Sort(numArr)
+	fmt.Printf("name: %s\n", algorithm.Name())
+	fmt.Printf("complexity: %s\n", algorithm.Complexity())
+	fmt.Printf("result: %v\n", sortedArr)
+	fmt.Printf("time: %f\n", time.Since(start).Seconds())
 	fmt.Println("==============")
 }
