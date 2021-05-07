@@ -2,6 +2,7 @@ package internal
 
 import (
 	"github.com/fruiting/go-algorithms/internal/mergesort"
+	"github.com/fruiting/go-algorithms/internal/insertionsort"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -10,6 +11,7 @@ func TestSort_Ok(t *testing.T) {
 	unsortedArr := []int{5, 3, 1, 7, 6, 4, 9, 10, 2, 8}
 	algorithms := []AlgorithmProcessor{
 		mergesort.NewMergeSort(),
+		insertionsort.NewInsertionSort(),
 	}
 	algorithmsNames := []string{
 		"merge sort",
