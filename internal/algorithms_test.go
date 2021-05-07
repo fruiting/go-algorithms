@@ -13,9 +13,11 @@ func TestSort_Ok(t *testing.T) {
 	}
 	algorithmsNames := []string{
 		"merge sort",
+		"insertion sort",
 	}
 	algorithmsComplexities := []string{
 		"O(nLog(n))",
+		"O(n^2)",
 	}
 
 	for key, algorithm := range algorithms {
