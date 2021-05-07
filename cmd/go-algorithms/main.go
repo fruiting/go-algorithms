@@ -5,14 +5,19 @@ import (
 	"fmt"
 	"github.com/fruiting/go-algorithms/internal"
 	"github.com/fruiting/go-algorithms/internal/mergesort"
+	"github.com/fruiting/go-algorithms/internal/insertionsort"
 	"os"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 )
 
 // numArr array of unsorted ints
 var numArr []int
+
+// wg WaitGroup
+var wg sync.WaitGroup
 
 func main() {
 	reader := bufio.NewReader(os.Stdin)
@@ -36,16 +41,29 @@ func main() {
 
 	algorithms := []internal.AlgorithmProcessor{
 		mergesort.NewMergeSort(),
+		insertionsort.NewInsertionSort(),
 	}
 
+	wg.Add(len(algorithms))
 	for _, algorithm := range algorithms {
-		fmt.Println("==============")
-		start := time.Now()
-		sortedArr := algorithm.Sort(numArr)
-		fmt.Printf("name: %s\n", algorithm.Name())
-		fmt.Printf("complexity: %s\n", algorithm.Complexity())
-		fmt.Printf("result: %v\n", sortedArr)
-		fmt.Printf("time: %f\n", time.Since(start).Seconds())
-		fmt.Println("==============")
+		go executeAlgorithm(algorithm)
 	}
+
+	wg.Wait()
+}
+
+func executeAlgorithm(algorithm internal.AlgorithmProcessor) {
+	start := time.Now()
+	sortedArr := algorithm.Sort(numArr)
+	finish := time.Since(start).Seconds()
+
+	str := "==============\n"
+	str = str + fmt.Sprintf("name: %s\n", algorithm.Name())
+	str = str + fmt.Sprintf("complexity: %s\n", algorithm.Complexity())
+	str = str + fmt.Sprintf("result: %v\n", sortedArr)
+	str = str + fmt.Sprintf("time: %f\n", finish)
+	str = str + "==============\n"
+	fmt.Println(str)
+
+	wg.Done()
 }
