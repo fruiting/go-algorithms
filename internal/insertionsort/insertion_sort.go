@@ -22,23 +22,23 @@ func NewInsertionSort() *InsertionSort {
 }
 
 // Name returns algorithm name
-func (m *InsertionSort) Name() string {
-	return m.name
+func (s *InsertionSort) Name() string {
+	return s.name
 }
 
 // Complexity returns algorithm complexity
-func (m *InsertionSort) Complexity() string {
-	return m.complexity
+func (s *InsertionSort) Complexity() string {
+	return s.complexity
 }
 
-// Sort algorithm
-func (m *InsertionSort) Sort(arr []int) []int {
+// Sort returns sorted array by specific algorithm
+func (s *InsertionSort) Sort(arr []int) []int {
 	for i := 1; i < len(arr); i++ {
 		current := arr[i]
 		j := i
 
-		for j > 0 && arr[j - 1] > current {
-			arr[j] = arr[j - 1]
+		for j > 0 && arr[j-1] > current {
+			arr[j] = arr[j-1]
 			j--
 		}
 		arr[j] = current

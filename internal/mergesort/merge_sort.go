@@ -22,17 +22,17 @@ func NewMergeSort() *MergeSort {
 }
 
 // Name returns algorithm name
-func (m *MergeSort) Name() string {
-	return m.name
+func (s *MergeSort) Name() string {
+	return s.name
 }
 
 // Complexity returns algorithm complexity
-func (m *MergeSort) Complexity() string {
-	return m.complexity
+func (s *MergeSort) Complexity() string {
+	return s.complexity
 }
 
-// Sort algorithm
-func (m *MergeSort) Sort(arr []int) []int {
+// Sort returns sorted array by specific algorithm
+func (s *MergeSort) Sort(arr []int) []int {
 	merge := func(left, right []int) []int {
 		lst := make([]int, 0)
 		for len(left) > 0 && len(right) > 0 {
@@ -59,8 +59,8 @@ func (m *MergeSort) Sort(arr []int) []int {
 		mid := length / 2
 		left := arr[:mid]
 		right := arr[mid:]
-		sortedLeft := m.Sort(left)
-		sortedRight := m.Sort(right)
+		sortedLeft := s.Sort(left)
+		sortedRight := s.Sort(right)
 		arr = merge(sortedLeft, sortedRight)
 	}
 
