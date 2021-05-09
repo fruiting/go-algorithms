@@ -13,7 +13,7 @@ type InsertionSort struct {
 	complexity string
 }
 
-// NewInsertionSort inits and returs InsertionSort struct
+// NewInsertionSort inits and returns InsertionSort struct
 func NewInsertionSort() *InsertionSort {
 	return &InsertionSort{
 		name:       name,

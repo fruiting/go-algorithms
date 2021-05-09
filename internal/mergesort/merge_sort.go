@@ -13,7 +13,7 @@ type MergeSort struct {
 	complexity string
 }
 
-// NewMergeSort inits and returs MergeSort struct
+// NewMergeSort inits and returns MergeSort struct
 func NewMergeSort() *MergeSort {
 	return &MergeSort{
 		name:       name,
