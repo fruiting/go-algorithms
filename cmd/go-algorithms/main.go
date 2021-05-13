@@ -21,7 +21,7 @@ const (
 	// maxPrintAllSize to print all elements of sorted array
 	maxPrintAllSize int = 10
 	// maxSize of array
-	maxSize int = 1000000
+	maxSize int = 100000000
 )
 
 // numArr array of unsorted integers
@@ -35,14 +35,16 @@ func main() {
 	fmt.Print("Enter array size: ")
 	input, err := reader.ReadString('\n')
 	if err != nil {
-		panic(fmt.Errorf("can't read string: %w", err))
+		fmt.Println(fmt.Errorf("can't read string: %w", err))
+		return
 	}
 
 	input = strings.TrimSuffix(input, "\n")
 	input = strings.TrimSpace(input)
 	size, err := strconv.Atoi(input)
 	if err != nil {
-		panic(fmt.Errorf("can't convert string to int: %w", err))
+		fmt.Println(fmt.Errorf("can't convert string to int: %w", err))
+		return
 	}
 
 	if size < minSize || size > maxSize {
@@ -72,14 +74,34 @@ func main() {
 	}
 
 	wg.Add(len(algorithms))
+	algoChan := make(chan string)
+	quit := make(chan bool)
+
 	for _, algorithm := range algorithms {
-		go executeAlgorithm(algorithm)
+		go func(algorithm internal.AlgorithmProcessor) {
+			algoChan <- algorithmInfo(algorithm)
+			wg.Done()
+		}(algorithm)
 	}
 
-	wg.Wait()
+	go func() {
+		wg.Wait()
+		quit <- true
+	}()
+
+	for {
+		select {
+		case info := <-algoChan:
+			fmt.Println(info)
+		case <-quit:
+			close(algoChan)
+			close(quit)
+			return
+		}
+	}
 }
 
-func executeAlgorithm(algorithm internal.AlgorithmProcessor) {
+func algorithmInfo(algorithm internal.AlgorithmProcessor) string {
 	start := time.Now()
 	sortedArr := algorithm.Sort(numArr)
 	finish := time.Since(start).Seconds()
@@ -104,7 +126,6 @@ func executeAlgorithm(algorithm internal.AlgorithmProcessor) {
 
 	str = str + fmt.Sprintf("time: %f\n", finish)
 	str = str + "==============\n"
-	fmt.Println(str)
 
-	wg.Done()
+	return str
 }
