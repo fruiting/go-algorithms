@@ -4,7 +4,4 @@
 
 <h4>This list will be replenished. For now this project has:</h2>
 <ul>
-    <li>Insertion sort</li>
-    <li>Merge sort</li>
-    <li>Quick sort</li>
 </ul>
