@@ -6,18 +6,15 @@ type BinarySearch struct {
 
 func NewBinarySearch() *BinarySearch {
 	return &BinarySearch{
-		complexity: "O (log2 n)",
+		complexity: "O(log n)",
 	}
 }
 
-func (s *BinarySearch) Run() int {
-	sortedArr := []int{1, 3, 5, 7, 8, 9, 10, 13, 15, 16, 18, 20, 22, 25, 27}
-	val := 18
-
-	return s.search(sortedArr, val)
+func (s *BinarySearch) Complexity() string {
+	return s.complexity
 }
 
-func (s *BinarySearch) search(sortedArr []int, val int) int {
+func (s *BinarySearch) Search(sortedArr []int, val int) int {
 	start := 0                // определяем первый ключ массива
 	end := len(sortedArr) - 1 // определяем последний ключ массива
 
