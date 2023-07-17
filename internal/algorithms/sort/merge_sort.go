@@ -26,7 +26,7 @@ func (s *MergeSort) Sort(arr []int) []int {
 	rightRes := s.Sort(arr[middle:])
 
 	// Запускаем рекурсию, в которой постоянно делим массив пополам и потом сортируем
-	return s.merge(s.Sort(leftRes), s.Sort(rightRes))
+	return s.merge(leftRes, rightRes)
 }
 
 func (s *MergeSort) merge(left, right []int) []int {
