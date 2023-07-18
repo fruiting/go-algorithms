@@ -46,3 +46,17 @@ func rangeSumBST(root *BinarySearchTree, low int, high int) int {
 
 	return sum
 }
+
+func searchBST(root *BinarySearchTree, val int) *BinarySearchTree {
+	if root == nil {
+		return nil
+	}
+
+	if root.Val == val {
+		return root
+	} else if root.Val > val {
+		return searchBST(root.Left, val)
+	} else {
+		return searchBST(root.Right, val)
+	}
+}
